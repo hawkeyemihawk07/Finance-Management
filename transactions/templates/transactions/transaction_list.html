@@ -1,0 +1,36 @@
+{% extends 'transactions/base.html' %} {% block content %}
+<h2>Transactions</h2>
+
+<form method="get" class="filter-form">
+    {{ form.as_p }}
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in transactions %}
+    <tr>
+      <td class="{{ transaction.type|lower }}">{{ transaction.get_type_display }}</td>
+      <td>&#8377;{{ transaction.amount }}</td>
+      <td>{{ transaction.category.name|default:"-" }}</td>
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.description|default:"-" }}</td>
+      <td class="actions">
+        <a href="{% url 'edit_transaction' transaction.pk %}">Edit</a>
+        <a href="{% url 'delete_transaction' transaction.pk %}" class="delete">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

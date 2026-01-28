@@ -1,0 +1,48 @@
+{% extends 'transactions/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="dashboard-summary">
+  <div class="summary-card">
+    <h3>Total Income</h3>
+    <p>&#8377;{{ total_income }}</p>
+  </div>
+  <div class="summary-card">
+    <h3>Total Expenses</h3>
+    <p>&#8377;{{ total_expenses }}</p>
+  </div>
+  <div class="summary-card">
+    <h3>Balance</h3>
+    <p>&#8377;{{ balance }}</p>
+  </div>
+</div>
+
+
+
+<h3>Recent Transactions</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for transaction in recent_transactions %}
+    <tr>
+      <td class="{{ transaction.type|lower }}">{{ transaction.get_type_display }}</td>
+      <td>&#8377;{{ transaction.amount }}</td>
+      <td>{{ transaction.category.name|default:"-" }}</td>
+      <td>{{ transaction.date }}</td>
+      <td>{{ transaction.description|default:"-" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

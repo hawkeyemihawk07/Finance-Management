@@ -1,0 +1,33 @@
+{% extends 'transactions/base.html' %}
+
+{% block content %}
+    <h2>Recurring Transactions</h2>
+    <a href="{% url 'add_recurring_transaction' %}" class="button">Add Recurring Transaction</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Frequency</th>
+                <th>Next Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.description }}</td>
+                <td>&#8377;{{ transaction.amount }}</td>
+                <td>{{ transaction.category.name|default:"-" }}</td>
+                <td>{{ transaction.get_frequency_display }}</td>
+                <td>{{ transaction.next_date }}</td>
+                <td class="actions">
+                    <a href="{% url 'edit_recurring_transaction' transaction.pk %}">Edit</a>
+                    <a href="{% url 'delete_recurring_transaction' transaction.pk %}" class="delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

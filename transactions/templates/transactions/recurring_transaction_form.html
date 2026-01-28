@@ -1,0 +1,14 @@
+{% extends 'transactions/base.html' %}
+
+{% block content %}
+    {% if transaction %}
+        <h2>Edit Recurring Transaction</h2>
+    {% else %}
+        <h2>Add Recurring Transaction</h2>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
